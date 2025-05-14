@@ -217,6 +217,12 @@ fn test_record_get_update_medical_test() {
     );
 
     assert_eq!(updated_test.test_type, updated_test_type);
+
+    //test get test statistics
+
+    let test_statistics = client.get_test_statistics();
+    assert_eq!((1,1,1), test_statistics);
+
 }
 
 #[test]
