@@ -90,7 +90,7 @@ impl HospitalContract {
     // Initializer -> It initialize the contract with the admin
     pub fn initialize(env: Env, admin: Address) -> Address {
         if env.storage().instance().has(&DataKey::Admin) {
-            panic!("Contract already initilized");
+            panic!("Contract already initialized");
         }
 
         env.storage().instance().set(&DataKey::Admin, &admin);
@@ -274,7 +274,7 @@ impl HospitalContract {
     pub fn get_doctor(env: Env, id: u64) -> Doctor {
         match env.storage().instance().get(&DataKey::Doctor(id)) {
             Some(doctor) => doctor,
-            None => panic!("Doctor not found"),
+            None => panic!("Doctor not registered"),
         }
     }
 
@@ -349,12 +349,24 @@ impl HospitalContract {
     ) -> u64 {
         Self::check_admin(&env);
 
-        if !env.storage().instance().has(&DataKey::Patient(patient_id)) {
-            panic!("Patient not found")
+        // if !env.storage().instance().has(&DataKey::Patient(patient_id)) {
+        //     panic!("Patient not found")
+        // }
+
+        // if !env.storage().instance().has(&DataKey::Doctor(doctor_id)) {
+        //     panic!("Doctor not found");
+        // }
+
+        let patient:Patient = env.storage().instance().get(&DataKey::Patient(patient_id)).unwrap_or_else(|| panic!("Patient Not Found"));
+
+        let doctor:Doctor = env.storage().instance().get(&DataKey::Doctor(doctor_id)).unwrap_or_else(|| panic!("Doctor Not Found"));
+
+        if patient.active == false{
+            panic!("Patient is inactive")
         }
 
-        if !env.storage().instance().has(&DataKey::Doctor(doctor_id)) {
-            panic!("Doctor not found");
+        if doctor.active == false {
+            panic!("Doctor is inactive")
         }
 
         let test_count: u64 = env
