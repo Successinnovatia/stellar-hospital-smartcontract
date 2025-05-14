@@ -77,17 +77,6 @@ cd stellar-hospital-smartcontract
 cargo test
 ```
 
-📂 Folder Structure
-sstellar-hospital-smartcontract/
-├── src/
-│   ├── contract.rs        # Main smart contract logic
-│   ├── storage.rs         # Storage key definitions
-│   ├── types.rs           # Structs for Patient, Doctor, MedicalTest, etc.
-│   └── test.rs            # Unit tests for contract functions
-├── Cargo.toml             # Rust package configuration
-├── README.md              # Project overview
-└── .gitignore             # Git ignored files
-
 
 👤 Author
 - Divine Success (@Successinnovatia)
